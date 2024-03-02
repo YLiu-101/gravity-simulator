@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Space</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        section {
+            padding: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About Space</h1>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <section id="home">
+        <h2>Welcome to Our Space Exploration Website</h2>
+        <p>Explore the mysteries of the universe with us.</p>
+    </section>
+    <section id="about">
+        <h2>About Us</h2>
+        <p>We are passionate about space exploration and eager to share our knowledge with you.</p>
+    </section>
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <p>View stunning images and videos from various space missions and telescopes.</p>
+    </section>
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions or feedback? Reach out to us through the contact form below.</p>
+        <form action="#" method="post">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="4" required></textarea><br>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 About Space. All rights reserved.</p>
+    </footer>
+</body>
+</html>
