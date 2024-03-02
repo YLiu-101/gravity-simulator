@@ -2,7 +2,7 @@ import pygame
 import math
 
 # Constants for window dimensions
-WIDTH, HEIGHT = 1000, 300
+WIDTH, HEIGHT = 2000, 2000
 
 # Constants for colors
 WHITE = (255, 255, 255)
@@ -42,7 +42,7 @@ def draw_planets(screen, angle):
 # Main function
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((450, 300))
+    screen = pygame.display.set_mode((2000, 2000))
     pygame.display.set_caption("Solar System Simulator")
     clock = pygame.time.Clock()
 
