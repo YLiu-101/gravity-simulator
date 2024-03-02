@@ -4,82 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Space</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background-color: #444;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 0 5px;
-        }
-        nav a:hover {
-            background-color: #555;
-        }
-        section {
-            padding: 20px;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <link rel="stylesheet" href="style.css">
     <header>
         <h1>About Space</h1>
     </header>
     <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="solarSystem.html">Solar System Simulation</a>
+        <a href="solarEclipse.html">Solar Eclipse</a>
+        <a href="lunarEclipse.html">Lunar Eclipse</a>
+        <a href="rocket.html">Rocket Relativity</a>
     </nav>
-    <section id="home">
+    <div class="text-container">
         <h2>Welcome to Our Space Exploration Website</h2>
         <p>Explore the mysteries of the universe with us.</p>
+    </div>
+        
+        
+     <!-- Sections -->
+     <section class="section" style="background-color: #b6b6b6;">
+        <img src="image-top.jpg" alt="Top Image" class="image image-top">
+        <div class="text-container">
+            <h2>The Solar System</h2><br>
+        <p>Observe the movement of our solar system throughout time.
+        </p>
+        <a href="solarSystem.html" class="btn">Explore</a>
+        </div>
     </section>
-    <section id="about">
-        <h2>About Us</h2>
-        <p>We are passionate about space exploration and eager to share our knowledge with you.</p>
+
+     <section class="section" style="background-color: #848484;">
+        <div class="image-container">
+            <img src="image-middle.jpg" alt="Middle Image" class="image image-middle">
+        </div >
+        <div class="text-container">
+            <h2>Solar Eclipse</h2><br>
+            <p>Discover the wonders of solar eclipses.</p><br>
+            <a href="solarEclipse.html" class="btn">Learn More</a>
+        </div>
     </section>
-    <section id="gallery">
-        <h2>Gallery</h2>
-        <p>View stunning images and videos from various space missions and telescopes.</p>
+
+    <section class="section" style="background-color: #b6b6b6;">
+        <img src="image-bottom.jpg" alt="Bottom Image" class="image image-bottom">
+        <div class="text-container">
+            <h2>Lunar Eclipse</h2>
+        <p>Explore the intricacies of lunar eclipses.</p>
+        <a href="lunarEclipse.html" class="btn">Discover</a>
+        </div>
     </section>
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p>Have questions or feedback? Reach out to us through the contact form below.</p>
-        <form action="#" method="post">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" required><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br>
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" required></textarea><br>
-            <input type="submit" value="Submit">
-        </form>
+    <section class="section" style="background-color: #848484;">
+        <div class="image-container">
+            <img src="rocket.jpg" alt="Middle Image" class="image image-middle">
+        </div >
+        <div class="text-container">
+            <h2>Rocket Relativity Simulation</h2><br>
+            <p>Observe the relativity of a rocket with this simulator.</p><br>
+            <a href="rocket.html" class="btn">View</a>
+        </div>
     </section>
     <footer>
         <p>&copy; 2024 About Space. All rights reserved.</p>

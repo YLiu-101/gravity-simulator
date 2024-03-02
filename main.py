@@ -4,30 +4,24 @@ import numpy as np
 # import numpy as np
 # Constants for window dimensions
 WIDTH, HEIGHT = 2000, 2000
-G_CONSTANT = 10**-10
-DELTA_TIME = 0.1
+
 # Constants for colors
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 GRAY = (192, 192, 192)
-YEAR = 2000
-MASS = list(np.array([3330000000*10**6.15, 0.0553, 0.815,1, 0.1075, 317.8, 95.2, 14.6, 17.2]))
-pos_x = [0,50,100,150,200,300,400,500,600]
-pos_y = list(np.zeros(len(pos_x)))
-vel_y = list((10)*np.array([0,2,1.5,1,0.8,0.5,0.3,0.2,0.15]))
-vel_x = list(np.zeros(len(pos_y)))
+
 # Constants for planetary data
 # The values are not to scale
 PLANETS = [
-    {"name": "Sun", "semi_major_axis": 0, "semi_minor_axis": 0, "color": YELLOW, "speed": 0},
-    {"name": "Mercury", "semi_major_axis": 50, "semi_minor_axis": 45, "color": GRAY, "speed": 2},
-    {"name": "Venus", "semi_major_axis": 100, "semi_minor_axis": 95, "color": (255, 165, 0), "speed": 1.5},
-    {"name": "Earth", "semi_major_axis": 150, "semi_minor_axis": 145, "color": (0, 0, 255), "speed": 1},
-    {"name": "Mars", "semi_major_axis": 200, "semi_minor_axis": 195, "color": (255, 0, 0), "speed": 0.8},
-    {"name": "Jupiter", "semi_major_axis": 300, "semi_minor_axis": 295, "color": (255, 140, 0), "speed": 0.5},
-    {"name": "Saturn", "semi_major_axis": 400, "semi_minor_axis": 395, "color": (255, 215, 0), "speed": 0.3},
-    {"name": "Uranus", "semi_major_axis": 500, "semi_minor_axis": 495, "color": (0, 255, 255), "speed": 0.2},
-    {"name": "Neptune", "semi_major_axis": 600, "semi_minor_axis": 595, "color": (0, 0, 128), "speed": 0.15}
+    {"name": "Sun", "semi_major_axis": 0, "semi_minor_axis": 0, "color": YELLOW, "speed": 0, "size": 17.5},
+    {"name": "Mercury", "semi_major_axis": 50, "semi_minor_axis": 45, "color": GRAY, "speed": 2, "size": 7},
+    {"name": "Venus", "semi_major_axis": 100, "semi_minor_axis": 95, "color": (255, 165, 0), "speed": 1.5, "size": 8},
+    {"name": "Earth", "semi_major_axis": 150, "semi_minor_axis": 145, "color": (100, 100, 255), "speed": 1, "size": 8},
+    {"name": "Mars", "semi_major_axis": 200, "semi_minor_axis": 195, "color": (255, 0, 0), "speed": 0.8, "size": 7.5},
+    {"name": "Jupiter", "semi_major_axis": 300, "semi_minor_axis": 295, "color": (255, 140, 0), "speed": 0.5, "size": 12},
+    {"name": "Saturn", "semi_major_axis": 400, "semi_minor_axis": 395, "color": (255, 215, 0), "speed": 0.3, "size": 11.5},
+    {"name": "Uranus", "semi_major_axis": 500, "semi_minor_axis": 495, "color": (0, 255, 255), "speed": 0.2, "size": 11},
+    {"name": "Neptune", "semi_major_axis": 600, "semi_minor_axis": 595, "color": (0, 0, 255), "speed": 0.15, "size": 11}
 ]
 
 
@@ -87,20 +81,8 @@ def draw_planets(screen, angle):
         semi_minor_axis = planet["semi_minor_axis"]
         color = planet["color"]
         speed = planet["speed"]
-        s1 = 'Year: ' + str(YEAR)
-        iter = 0
-        for i in PLANETS:
-           s1+= "\n" + i["name"] + " speed: " + str(math.sqrt(vel_x[iter]**2 + vel_y[iter]**2))
-           iter+=1
-        print(s1)
-        text_surface = my_font.render('Year (in millions): ' + str(YEAR) , False, (250, 250, 250))
-        text_surface1 = my_font.render(s1, False, (250, 250, 250))
-
-        # text_surface = my_font.render('Year: ' + str(YEAR), False, (250, 250, 250))
-        screen.blit(text_surface, (WIDTH//2+500, HEIGHT//2+200))
-        # screen.blit(text_surface1, (WIDTH//2+550, HEIGHT//2+250))
-
-        pygame.draw.circle(screen, color, (WIDTH // 2+ pos_x[iterator], HEIGHT // 2 + pos_y[iterator]), 10)
+        x, y = calculate_position(angle * speed, semi_major_axis, semi_minor_axis)
+        pygame.draw.circle(screen, color, (x, y), 5)
         pygame.draw.ellipse(screen, WHITE, (WIDTH // 2 - semi_major_axis, HEIGHT // 2 - semi_minor_axis, 2 * semi_major_axis, 2 * semi_minor_axis), 1)
         iterator+=1
     YEAR += 110
