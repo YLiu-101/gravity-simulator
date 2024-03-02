@@ -1,14 +1,21 @@
 import pygame
 import math
-
+import numpy as np
+# import numpy as np
 # Constants for window dimensions
 WIDTH, HEIGHT = 2000, 2000
-
+G_CONSTANT = 10**-10
+DELTA_TIME = 0.1
 # Constants for colors
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 GRAY = (192, 192, 192)
-
+YEAR = 2000
+MASS = list(np.array([3330000000*10**6.15, 0.0553, 0.815,1, 0.1075, 317.8, 95.2, 14.6, 17.2]))
+pos_x = [0,50,100,150,200,300,400,500,600]
+pos_y = list(np.zeros(len(pos_x)))
+vel_y = list((10)*np.array([0,2,1.5,1,0.8,0.5,0.3,0.2,0.15]))
+vel_x = list(np.zeros(len(pos_y)))
 # Constants for planetary data
 # The values are not to scale
 PLANETS = [
@@ -23,23 +30,85 @@ PLANETS = [
     {"name": "Neptune", "semi_major_axis": 600, "semi_minor_axis": 595, "color": (0, 0, 128), "speed": 0.15}
 ]
 
-# Function to calculate planet positions
-def calculate_position(angle, semi_major_axis, semi_minor_axis):
-    x = WIDTH // 2 + semi_major_axis * math.cos(math.radians(angle))
-    y = HEIGHT // 2 + semi_minor_axis * math.sin(math.radians(angle))
-    return int(x), int(y)
 
+
+
+def calculate_accel(masses, x_positions, y_positions):
+    a_vec_x = list(np.zeros(len(masses)))
+    a_vec_y=list(np.zeros(len(masses)))
+    a_vec = [0,0]
+    for i in range(len(masses)):
+        for j in range(len(masses)):
+            # print(i,j)
+            a_vec = [0,0]
+            if j != i:
+                angle = math.atan2((y_positions[j]-y_positions[i]),(x_positions[j]-x_positions[i]))
+                dist = math.sqrt((x_positions[0]-x_positions[1])**2 + (y_positions[0]-y_positions[1])**2)
+                accel = G_CONSTANT*masses[j]/(dist**2)
+                new_vec_x = accel*math.cos(angle)
+                new_vec_y = accel*math.sin(angle)
+                a_vec[0] += new_vec_x
+                a_vec[1] += new_vec_y
+            a_vec_x[i] += a_vec[0]
+            a_vec_y[i] += a_vec[1]
+    return a_vec_x,a_vec_y
+def update_vel(accel_x, accel_y, current_vel_x, current_vel_y):
+  vel_x = list(np.zeros(len(accel_x)))
+  vel_y = list(np.zeros(len(accel_x)))
+  for i in range(len(current_vel_x)):
+    vel_x[i] = current_vel_x[i] + accel_x[i]*DELTA_TIME
+    vel_y[i] = current_vel_y[i] + accel_y[i]*DELTA_TIME
+
+  return vel_x, vel_y
+def update_pos(accel_x, accel_y, current_vel_x, current_vel_y):
+  vel_x = list(np.zeros(len(accel_x)))
+  vel_y = list(np.zeros(len(accel_x)))
+  for i in range(len(current_vel_x)):
+    vel_x[i] = current_vel_x[i] + accel_x[i]*DELTA_TIME
+    vel_y[i] = current_vel_y[i] + accel_y[i]*DELTA_TIME
+
+  return vel_x, vel_y
 # Function to draw planets and orbits
 def draw_planets(screen, angle):
+    global YEAR
+    pygame.font.init() # you have to call this at the start, 
+                   # if you want to use this module.
+    my_font = pygame.font.SysFont('Comic Sans MS', 15)
+    
+    global pos_x, pos_y
+    pygame.draw.circle(screen, (255,255,0), (250, 250), 10) 
+
+    a_x, a_y = calculate_accel(MASS,pos_x,pos_y)
+    v_x, v_y = update_vel(a_x,a_y,vel_x,vel_y)
+    pos_x, pos_y = update_pos(v_x,v_y,pos_x,pos_y)
+    iterator = 0
     for planet in PLANETS:
         semi_major_axis = planet["semi_major_axis"]
         semi_minor_axis = planet["semi_minor_axis"]
         color = planet["color"]
         speed = planet["speed"]
-        x, y = calculate_position(angle * speed, semi_major_axis, semi_minor_axis)
-        pygame.draw.circle(screen, color, (x, y), 5)
-        pygame.draw.ellipse(screen, WHITE, (WIDTH // 2 - semi_major_axis, HEIGHT // 2 - semi_minor_axis, 2 * semi_major_axis, 2 * semi_minor_axis), 1)
+        s1 = 'Year: ' + str(YEAR)
+        iter = 0
+        for i in PLANETS:
+           s1+= "\n" + i["name"] + " speed: " + str(math.sqrt(vel_x[iter]**2 + vel_y[iter]**2))
+           iter+=1
+        print(s1)
+        text_surface = my_font.render('Year (in millions): ' + str(YEAR) , False, (250, 250, 250))
+        text_surface1 = my_font.render(s1, False, (250, 250, 250))
 
+        # text_surface = my_font.render('Year: ' + str(YEAR), False, (250, 250, 250))
+        screen.blit(text_surface, (WIDTH//2+500, HEIGHT//2+200))
+        # screen.blit(text_surface1, (WIDTH//2+550, HEIGHT//2+250))
+
+        pygame.draw.circle(screen, color, (WIDTH // 2+ pos_x[iterator], HEIGHT // 2 + pos_y[iterator]), 10)
+        pygame.draw.ellipse(screen, WHITE, (WIDTH // 2 - semi_major_axis, HEIGHT // 2 - semi_minor_axis, 2 * semi_major_axis, 2 * semi_minor_axis), 1)
+        iterator+=1
+    YEAR += 110
+# # Function to calculate planet positions
+# def calculate_position(angle, semi_major_axis, semi_minor_axis):
+#     x = WIDTH // 2 + semi_major_axis * math.cos(math.radians(angle))
+#     y = HEIGHT // 2 + semi_minor_axis * math.sin(math.radians(angle))
+#     return int(x), int(y)
 # Main function
 def main():
     pygame.init()
@@ -57,25 +126,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            # elif event.type == pygame.MOUSEBUTTONDOWN:
-            #     if event.button == 1:  # Left mouse button
-            #         dragging = True
-            #         mouse_x, mouse_y = event.pos
-            #         offset_x = mouse_x - WIDTH // 2
-            #         offset_y = mouse_y - HEIGHT // 2
-            # elif event.type == pygame.MOUSEBUTTONUP:
-            #     if event.button == 1:
-            #         dragging = False
-            # elif event.type == pygame.MOUSEMOTION:
-            #     if dragging:
-            #         mouse_x, mouse_y = event.pos
-            #         WIDTH, HEIGHT = pygame.display.get_surface().get_size()
-            #         new_center_x = mouse_x - offset_x
-            #         new_center_y = mouse_y - offset_y
-            #         screen.fill((0, 0, 0))  # Clear the screen
-            #         screen.blit(screen, (new_center_x - WIDTH // 2, new_center_y - HEIGHT // 2))
-            #         pygame.display.flip()
-
         screen.fill((0, 0, 0))  # Clear the screen
 
         draw_planets(screen, angle)
