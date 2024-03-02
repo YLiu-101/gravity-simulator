@@ -1,5 +1,8 @@
-import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JComponent;
 import java.awt.Color;
+import java.util.*;
 
 /**
  * Class that contains the main method for the program and creates the frame containing the component.
@@ -28,7 +31,7 @@ public class SolarSystemViewer
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // a frame contains a single component; create the Cityscape component and add it to the frame
-        CityscapeComponent component = new CityscapeComponent();
+        SolarSystemComponent component = new SolarSystemComponent();
         frame.add(component);
         
         frame.getContentPane().setBackground(night);
