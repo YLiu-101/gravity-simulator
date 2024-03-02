@@ -12,6 +12,7 @@ GRAY = (192, 192, 192)
 # Constants for planetary data
 # The values are not to scale
 PLANETS = [
+    {"name": "Sun", "semi_major_axis": 0, "semi_minor_axis": 0, "color": YELLOW, "speed": 0},
     {"name": "Mercury", "semi_major_axis": 50, "semi_minor_axis": 45, "color": GRAY, "speed": 2},
     {"name": "Venus", "semi_major_axis": 100, "semi_minor_axis": 95, "color": (255, 165, 0), "speed": 1.5},
     {"name": "Earth", "semi_major_axis": 150, "semi_minor_axis": 145, "color": (0, 0, 255), "speed": 1},
